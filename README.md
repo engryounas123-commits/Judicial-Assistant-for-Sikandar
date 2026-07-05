@@ -1,239 +1,136 @@
-# ⚖️ AI Judicial Bench Assistant – Pakistan
+# ⚖️ Sikandar Khan Judicial Assistant
+### AI-powered legal decision-support for Pakistani courts
 
-A production-grade AI-powered court judgment generation system for Pakistan, built with Python and Streamlit. Simulates a multi-judge panel of 5 specialist AI agents that deliberate on case documents and produce fully reasoned, editable Microsoft Word court judgments.
-
----
-
-## 🏛️ Supported Courts
-
-| Court | Template |
-|-------|----------|
-| Supreme Court of Pakistan | `supreme.docx` |
-| Lahore High Court | `lahore_hc.docx` |
-| Islamabad High Court | `islamabad_hc.docx` |
-| Peshawar High Court | `peshawar_hc.docx` |
-| Balochistan High Court | `balochistan_hc.docx` |
-| Sindh High Court | `sindh_hc.docx` |
-| Federal Shariat Court | `fsc.docx` |
+> This tool assists judges, lawyers, and researchers — it does NOT replace judicial authority.
 
 ---
 
-## ⚖️ AI Judge Panel
+## 🚀 Deploy in 5 Steps (Free, No Laptop Issues)
+
+### What you will get
+A real working link like `https://your-app.streamlit.app` that opens in any browser, anywhere.
+
+---
+
+### STEP 1 — Get a free GitHub account
+Go to **github.com** → click **Sign up** → create a free account.
+
+---
+
+### STEP 2 — Upload these files to GitHub
+
+1. Log in to GitHub
+2. Click the **+** button (top right) → **New repository**
+3. Name it: `judicial-assistant`
+4. Set it to **Public**
+5. Click **Create repository**
+6. Now upload ALL files from this folder:
+   - Click **"uploading an existing file"**
+   - Drag ALL files and folders into the GitHub window
+   - Click **Commit changes**
+
+**Files to upload:**
+```
+app.py
+requirements.txt
+packages.txt
+.gitignore
+README.md
+.streamlit/config.toml
+```
+> ⚠️ Do NOT upload `.streamlit/secrets.toml` — that stays private on your computer.
+
+---
+
+### STEP 3 — Get your Anthropic API Key (the AI brain)
+
+1. Go to **console.anthropic.com**
+2. Sign up for a free account
+3. Go to **API Keys** → **Create Key**
+4. Copy the key (starts with `sk-ant-...`)
+
+---
+
+### STEP 4 — Deploy on Streamlit Cloud (100% free)
+
+1. Go to **share.streamlit.io**
+2. Sign in with your GitHub account
+3. Click **New app**
+4. Select:
+   - Repository: `judicial-assistant`
+   - Branch: `main`
+   - Main file: `app.py`
+5. Click **Advanced settings** → **Secrets**
+6. Paste this (replace with your real values):
+   ```toml
+   ANTHROPIC_API_KEY = "sk-ant-your-key-here"
+   APP_USERNAME = "admin"
+   APP_PASSWORD = "judicial2024"
+   ```
+7. Click **Save** → Click **Deploy!**
+
+---
+
+### STEP 5 — Share the link!
+
+Streamlit gives you a URL like:
+```
+https://judicial-assistant-yourname.streamlit.app
+```
+Share this with anyone. Works on phone, tablet, laptop — any browser.
+
+---
+
+## 📋 How to Use the App
+
+| Step | What to do |
+|------|-----------|
+| **Login** | Enter username/password you set in secrets |
+| **Upload** | Upload case documents (PDF/DOCX/images) in Zone 1. Optionally upload reference judgment templates in Zone 2 |
+| **Analyze** | Click "Run AI Case Analysis" — AI extracts parties, evidence, legal issues |
+| **Judge Panel** | Click "Start Full Deliberation" — 5 AI agents deliberate (takes 1-2 mins) |
+| **Judgment** | View the full formatted judgment in Word-document style |
+| **Export** | Download as .docx (opens in Word/LibreOffice) or JSON |
+
+---
+
+## 🤖 The Five AI Judges
 
 | Agent | Role |
 |-------|------|
-| **Pakistani Law Expert** | PPC, CPC, CrPC, Constitution, statutory interpretation |
-| **Shariah Judge** | Quran, Hadith, Fiqh (Hanafi), FSC jurisdiction |
-| **Domain Specialist** | Property, banking, family, tax, corporate, criminal |
-| **Precedent Researcher** | RAG-based citation retrieval from Pakistani legal databases |
-| **Chief Justice AI** | Synthesises all opinions → final binding judgment JSON |
+| Agent 1 | Pakistani Law Expert — Constitution, CPC, CrPC, Qanun-e-Shahadat |
+| Agent 2 | Shariah Judge — Quran, Sunnah, Hadith, Fiqh |
+| Agent 3 | Domain Specialist — property/family/tax/banking/criminal/labor/corporate |
+| Agent 4 | Precedent Research — retrieves relevant Supreme Court & High Court cases |
+| Agent 5 | Chief Justice — synthesizes all opinions into the final reasoned verdict |
 
 ---
 
-## 📋 Project Structure
+## ⚠️ Important Disclaimers
 
-```
-ai_judge/
-├── app.py                  # Main Streamlit application
-├── requirements.txt        # Python dependencies
-├── .env.example            # Environment variable template
-├── create_templates.py     # Script to generate court DOCX templates
-├── README.md
-│
-├── prompts/
-│   ├── judge_law.txt       # Pakistani Law Expert system prompt
-│   ├── judge_shariah.txt   # Shariah Judge system prompt
-│   ├── judge_domain.txt    # Domain Specialist prompt
-│   ├── judge_precedent.txt # Precedent Researcher prompt
-│   └── chief_justice.txt   # Chief Justice synthesis prompt
-│
-├── modules/
-│   ├── ocr.py              # OCR pipeline (PDF, DOCX, images, Urdu+English)
-│   ├── parser.py           # Case entity extraction (parties, dates, amounts)
-│   ├── classifier.py       # Case type classification & template matching
-│   ├── embeddings.py       # Sentence-transformers + FAISS vector index
-│   ├── rag.py              # Legal RAG retrieval system
-│   ├── agents.py           # 5-agent AI judge panel orchestrator
-│   ├── dashboard.py        # Streamlit dashboard renderer (6 tabs)
-│   └── judgment_writer.py  # DOCX judgment generator
-│
-├── data/
-│   └── legal_knowledge.json  # Pakistani law knowledge base (statutes + precedents)
-│
-├── templates/              # Court DOCX templates (generated by create_templates.py)
-└── logs/                   # Application logs
-```
+- Every generated judgment carries an explicit AI disclaimer
+- Unverified case citations are clearly marked **UNVERIFIED REFERENCE**
+- This tool is for decision-support only — all outputs must be reviewed by a human judicial officer
+- Do not use for real court filings without independent legal verification
 
 ---
 
-## 🚀 Installation & Setup
+## 💰 Cost
 
-### 1. Clone / Download
-
-```bash
-git clone <repo-url>
-cd ai_judge
-```
-
-### 2. Create virtual environment
-
-```bash
-python -m venv venv
-# Windows:
-venv\Scripts\activate
-# Linux/macOS:
-source venv/bin/activate
-```
-
-### 3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Install Tesseract OCR (for scanned documents)
-
-**Ubuntu / Debian:**
-```bash
-sudo apt-get install tesseract-ocr tesseract-ocr-urd
-```
-
-**macOS (Homebrew):**
-```bash
-brew install tesseract
-```
-
-**Windows:**
-Download from: https://github.com/UB-Mannheim/tesseract/wiki
-
-### 5. Configure environment
-
-```bash
-cp .env.example .env
-# Edit .env and set your OPENAI_API_KEY
-```
-
-### 6. Generate court templates
-
-```bash
-python create_templates.py
-```
-
-### 7. Run the application
-
-```bash
-streamlit run app.py
-```
-
-The app will open at `http://localhost:8501`
+| Component | Cost |
+|-----------|------|
+| GitHub | Free |
+| Streamlit Cloud | Free |
+| Anthropic API | ~$0.01–0.10 per case analysis (pay as you go) |
 
 ---
 
-## 🔧 Configuration
+## 🆘 Troubleshooting
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `OPENAI_API_KEY` | *(required)* | Your OpenAI API key |
-| `AI_MODEL` | `gpt-4o` | OpenAI model to use |
-| `TESSERACT_PATH` | `/usr/bin/tesseract` | Path to tesseract binary |
-| `OCR_LANGUAGES` | `eng+urd` | Tesseract language codes |
-| `EMBEDDING_MODEL` | `all-MiniLM-L6-v2` | Sentence-transformers model |
+**"App not loading"** → Wait 2-3 minutes after deploy; first load takes time.
 
----
+**"API Key error"** → Double-check secrets in Streamlit dashboard → App Settings → Secrets.
 
-## 📄 Input Formats Supported
+**"File upload error"** → Supported formats: PDF, DOCX, JPG, PNG, TIFF.
 
-| Format | Description |
-|--------|-------------|
-| `.pdf` | Text-based or scanned PDF (OCR applied if sparse) |
-| `.docx` | Microsoft Word documents |
-| `.jpg/.jpeg` | JPEG photographs (mobile camera OK) |
-| `.png` | PNG images |
-| `.tiff/.tif` | TIFF scanned documents |
-| `.bmp` | BMP images |
-
-Multiple files can be uploaded simultaneously and are merged into one case bundle.
-
----
-
-## 📜 Output Structure
-
-The generated DOCX judgment contains:
-
-1. **Cover Page / Dashboard** – Case snapshot, parties, decision, confidence score
-2. **Introduction** – Background and nature of the case
-3. **Facts of the Case** – Narrative chronological facts
-4. **Issues Framed** – Specific legal questions
-5. **Arguments of Parties** – Petitioner and respondent submissions
-6. **Evidence Analysis** – Assessment of evidence on record
-7. **Legal Reasoning** – Application of law to facts
-8. **Precedents** – Cited and applied case law
-9. **Findings** – Findings on each issue
-10. **Operative Order** – Final binding order
-11. **Appendix** – Individual judge panel deliberations
-
----
-
-## 🔒 Security Features
-
-- API key never stored in logs or session state beyond use
-- Temporary files deleted immediately after processing
-- File type validation before processing
-- Prompt injection mitigation via structured extraction
-- OCR text sanitisation before AI processing
-
----
-
-## ⚠️ Disclaimer
-
-> **This system is for research and reference purposes only.**
-> AI-generated judgments are NOT legally binding court orders.
-> Always consult qualified Pakistani legal counsel for actual legal matters.
-> Citations marked "REQUIRES VERIFICATION" must be independently confirmed.
-
----
-
-## 🔑 API Cost Estimates
-
-| Model | Per Judgment (approx.) |
-|-------|------------------------|
-| `gpt-4o` | ~$0.15 – $0.40 |
-| `gpt-4-turbo` | ~$0.20 – $0.50 |
-| `gpt-3.5-turbo` | ~$0.02 – $0.05 |
-
----
-
-## 🤝 Extending the Knowledge Base
-
-Add more precedents and statutes to `data/legal_knowledge.json`:
-
-```json
-{
-  "precedents": [
-    {
-      "id": "SC_2024_XXX",
-      "case_title": "Party A v. Party B",
-      "citation": "PLD 2024 SC 100",
-      "court": "Supreme Court of Pakistan",
-      "year": 2024,
-      "judge": "Justice Name",
-      "legal_principle": "The principle established…",
-      "category": "criminal",
-      "keywords": ["keyword1", "keyword2"],
-      "verified": true
-    }
-  ]
-}
-```
-
-After adding entries, delete `data/legal_index.faiss` and restart the app to rebuild the FAISS index.
-
----
-
-## 📞 Support
-
-For issues, open a GitHub issue or contact the development team.
-
----
-
-*AI Judicial Bench Assistant | Pakistan Legal AI System | v1.0*
+**"Analysis returned error"** → Your Anthropic API key may be invalid or have no credits.
